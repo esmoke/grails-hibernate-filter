@@ -3,7 +3,6 @@ package org.grails.plugin.hibernate.filter
 import org.codehaus.groovy.grails.orm.hibernate.cfg.GrailsAnnotationConfiguration
 import org.codehaus.groovy.grails.commons.GrailsApplication
 import org.hibernate.MappingException
-import org.hibernate.engine.FilterDefinition
 
 class HibernateFilterDomainConfiguration extends GrailsAnnotationConfiguration {
 
@@ -18,11 +17,9 @@ class HibernateFilterDomainConfiguration extends GrailsAnnotationConfiguration {
 
 	@Override
 	protected void secondPassCompile() throws MappingException {
-		if (configLocked) {
-			return
-		}
+        super.secondPassCompile()
 
-		super.secondPassCompile()
+        if (configLocked) return
 
 		for (domainClass in grailsApplication.domainClasses) {
 			def filters = domainClass.getPropertyValue('hibernateFilters')
